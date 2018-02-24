@@ -8,6 +8,15 @@
 
 %for annotations
 \newcommand\annotation[1]{\textcolor{red}{#1}}
+\usepackage{kbordermatrix}
+
+\newtheorem{theorem}{Theorem}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\newtheorem{calculation}{Calculation}
+
+\newcommand\scalemath[2]{\scalebox{#1}{\mbox{\ensuremath{\displaystyle #2}}}}
 
 %definitions for figures
       \tikzset{neuron/.style = {circle,fill=black!25,minimum size=10pt,inner sep=0pt},
