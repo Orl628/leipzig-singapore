@@ -1,6 +1,29 @@
 \documentclass[a4paper]{article}
 
 \usepackage{amsmath,amssymb,amsthm,mathtools}
+
+\usepackage{tikz,hyperref}
+\usepackage{graphicx,subfigure}
+\usetikzlibrary{spy,calc,patterns,arrows,decorations.pathmorphing,backgrounds,positioning,fit,petri,mindmap,trees,intersections}
+
+
+%definitions for figures
+      \tikzset{neuron/.style = {circle,fill=black!25,minimum size=10pt,inner sep=0pt},
+        unit/.style = {neuron, fill=red!50,thick},
+    gpu/.style = {rectangle, rounded corners=5pt,draw=green!50, fill=green!20, very thick, minimum width=3.75cm, minimum height = 9.75cm},
+        onegpu/.style = {rectangle, rounded corners=5pt,draw=green!50, fill=green!20, very thick, minimum width=17cm, minimum height = 6.5cm},
+    pre/.style =    {<-, semithick},
+    post/.style =   {->, semithick}
+}
+
+\newcommand\DoubleLine[7][1pt]{%
+    \path(#2)--(#3)coordinate[at start](h1)coordinate[at end](h2);
+    \draw[#4,thick]($(h1)!#1!90:(h2)$)-- node [left=-.75mm] {#5} ($(h2)!#1!-90:(h1)$); 
+    \draw[#6,thick]($(h1)!#1!-90:(h2)$)-- node [right=-.75mm] {#7} ($(h2)!#1!90:(h1)$);
+    }
+
+
+
 \input{commands}
 
 \title{A Toric Variety from Machine Learning}
