@@ -1,6 +1,8 @@
 %!TEX root = ./master.tex
 \section{Introduction}
 
+In this paper, we introduce a new statistical model called the \emph{McCulloch-Pitts process, MPP} which is biologically inspired, for recurrent neural networks....
+
 \section{McCulloch-Pitts Process}
 
 Given a directed graph $G=(V,E)$ with vertex weights $\beta_i > 0$ and edge weights $\alpha_{ij} > 0$, a \emph{McCulloch-Pitts process, MPP} is an activity-based process with binary states $x \in \{0,1\}^{|V|}$ and transitions $xy$ where state $y$ is one-bit away from state $x$. If $y$ and $x$ differs in the $i$-th bit, we define the transition rate 
@@ -41,5 +43,53 @@ F_{xy} = \left[ \beta_i^{\sigma_i} \alpha_i^{x \sigma_i} \right]^{1/\tau}
 %\node at (2.525,-0.1){$w_{11}$};
 \end{tikzpicture}
 \caption{McCulloch-Pitts process with three neurons.}
-\label{fig:mpn}
+\label{fig:mpp}
 \end{figure}
+
+Working with the example in Figure \ref{fig:mpp}, the transition rate matrix is given by
+
+\begin{align*}
+    \scalemath{0.7}{
+F=\kbordermatrix{
+          & 000 & 001 & 010 & 011 & 100 & 101 & 110 & 111 \\
+    000 &\ast  & \beta_3 & \beta_2 & 0 & \beta_1 & 0 & 0 & 0 \\
+    001 & \beta_3^{-1}\alpha_{33}^{-1} & \ast & 0 & \beta_2\alpha_{32} & 0 & \beta_1\alpha_{31} & 0 & 0  \\
+    010 & \beta_2^{-1}\alpha_{22}^{-1} & 0 &\ast  & \beta_3\alpha_{23} & 0 & 0 & \beta_1\alpha_{21} & 0  \\
+    011 & 0 & \beta_{2}^{-1}\alpha_{22}^{-1}\alpha_{32}^{-1} & \beta_3^{-1}\alpha_{23}^{-1}\alpha_{33}^{-1} &\ast  & 0 & 0 & 0 & \beta_{1}\alpha_{21}\alpha_{31}  \\
+    100 & \beta_1^{-1}\alpha_{11}^{-1} & 0 & 0 & 0 & \ast & \beta_3\alpha_{13} & \beta_{2}\alpha_{12} & 0  \\
+    101 & 0 & \beta_1^{-1}\alpha_{11}^{-1}\alpha_{31}^{-1} & 0 & 0 & \beta_{3}^{-1}\alpha_{13}^{-1}\alpha_{33}^{-1} & \ast & 0 & \beta_2\alpha_{12}\alpha_{32}  \\
+    110 & 0 & 0 & \beta_1^{-1}\alpha_{11}^{-1}\alpha_{21}^{-1} & 0 & \beta_{2}^{-1}\alpha_{12}^{-1}\alpha_{22}^{-1} & 0 & \ast & \beta_3\alpha_{13}\alpha_{23}  \\
+    111 & 0 & 0 & 0 & (\beta_1\alpha_1^{111})^{-1} & 0 & (\beta_2\alpha_{2}^{111})^{-1} & (\beta_3\alpha_{3}^{111})^{-1} & \ast  \\
+  }}
+\end{align*}
+
+where $\ast$ denotes the negative of the sum of its corresponding row, and $\alpha_i^{111} = \alpha_{1i}\alpha_{2i}\alpha_{3i}$. 
+
+The simulation of the McCulloch-Pitts process starts by drawing an inital state $x^{(0)}$  from a distribution $p^{(0)}$. Then for any state $x$, it holds for some time 
+\begin{align*}
+\Delta t \sim \text{Exp}(\lambda_x)
+\end{align*}
+where $\lambda_x = \sum_{y \neq x}F_{xy}$ and it transits to state $y$ which is one hop away with probability 
+\begin{align*}
+F_{xy}/\lambda_x
+\end{align*}
+Thus the temporal data obtained from the simulation are binary tuples of length $|V|$ and an associated holding time for each pair of consecutive state.
+
+
+
+\section{Toric Variety}
+With the statistical model defined proper, we would like to show that the map from the the space of positive parameters $(\beta_i,\alpha_{ij})$ to the space of stochastic rate matrices is a toric map.
+
+\begin{defn}[Toric Map]
+ZS to fill up
+\end{defn} 
+
+\begin{defn}[Toric Variety]
+ZS to fill up
+\end{defn} 
+
+
+Next we would like know the degree and dimension of our toric variety. By first principles, we can obtain them by.... 
+
+
+{\color{blue}I would like to give some heuristics here, like the degree is the number of interections when we stab the toric variety with a line, plane or in general with a hyperplane. What good does knowing the dimension and degree helps us with and how the method of finding the dimension we used on Wednesday is equivalent to finding the dimension and degree by the method we discuss above.}
