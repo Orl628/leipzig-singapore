@@ -3,9 +3,11 @@
 
 \section{McCulloch-Pitts Process}
 
-Given a directed graph $G=(V,E)$ with vertex weights $\beta_i > 0$ and edge weights $\alpha_{ij} > 0$, a \emph{McCulloch-Pitts process, MPP} is an activity-based process with binary states $x \in \{0,1\}^{|V|}$ and transitions $xy$ where state $y$ is one-bit away from state $x$. If $y$ and $x$ differs in the $i$-th bit, we define the transition rate 
+Given a directed graph $G=(V,E)$ with vertex weights $\beta_i > 0$ and edge weights $\alpha_{ij} > 0$, a \emph{McCulloch-Pitts process, MPP} is an activity-based process with binary states $x \in \{0,1\}^{|V|}$ and transitions $xy$ where state $y$ is one-bit away from state $x$. If $y$ and $x$ differs in the $i$-th bit, we define the transition rate
+
 \begin{align*}
 F_{xy} = \left[ \beta_i^{\sigma_i} \alpha_i^{x \sigma_i} \right]^{1/\tau}
+\text{\annotation{ shouldn't it be $\alpha_{ij}$?}}
 \end{align*}
 
 

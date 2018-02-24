@@ -1,11 +1,13 @@
 \documentclass[a4paper]{article}
 
-\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{amssymb,amsmath,amsthm,mathtools}
 
 \usepackage{tikz,hyperref}
 \usepackage{graphicx,subfigure}
 \usetikzlibrary{spy,calc,patterns,arrows,decorations.pathmorphing,backgrounds,positioning,fit,petri,mindmap,trees,intersections}
 
+%for annotations
+\newcommand\annotation[1]{\textcolor{red}{#1}}
 
 %definitions for figures
       \tikzset{neuron/.style = {circle,fill=black!25,minimum size=10pt,inner sep=0pt},
@@ -22,8 +24,6 @@
     \draw[#6,thick]($(h1)!#1!-90:(h2)$)-- node [right=-.75mm] {#7} ($(h2)!#1!90:(h1)$);
     }
 
-
-
 \input{commands}
 
 \title{A Toric Variety from Machine Learning}
@@ -34,5 +34,6 @@
 \maketitle
 
 \input{introduction}
+\input{toric-variety}
 
 \end{document}
