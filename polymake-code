@@ -1,0 +1,43 @@
+#See the following resource: http://page.math.tu-berlin.de/~joswig/teaching/VL+SE-Convex+geometry+related+to+Hamiltonian+group+actions-WS17/jupyter.pdf or http://page.math.tu-berlin.de/~joswig/teaching/VL+SE-Convex+geometry+related+to+Hamiltonian+group+actions-WS17/jupyter.ipynb
+
+#In my live polymake session, I observed the results in the comments below. However, at some point polymake stopped working.
+
+#It is very time-consuming to find all the dependencies necessary to install Polymake in Ubuntu. I listed them in required.txt.
+
+$r1 =  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1];
+$r2 =  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0];
+$r3 =  [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0];
+$r4 =  [0, 0, 0, 0, 0, 0, 0, 0,-1, 0, 0,-1];
+$r5 =  [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0];
+$r6 =  [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0];
+$r7 =  [0, 0, 0, 0, 0,-1, 0, 0, 0, 0,-1, 0];
+$r8 =  [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0];
+$r9 =  [0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0];
+$r10 = [0, 0, 0, 0, 0,-1, 0,-1, 0, 0, 0,-1];
+$r11 = [0, 0, 0, 0, 0, 0,-1, 0,-1, 0, 0,-1];
+$r12 = [0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0];
+$r13 = [-1,0, 0, 0, 0, 0, 0, 0, 0,-1, 0, 0];
+$r14 = [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1];
+$r15 = [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0];
+$r16 = [-1,0, 0, 0,-1, 0, 0, 0, 0,-1, 0, 0];
+$r17 = [0, 0, 0,-1, 0, 0, 0, 0,-1, 0, 0,-1];
+$r18 = [0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0];
+$r19 = [-1,0,-1, 0, 0, 0, 0, 0, 0,-1, 0, 0];
+$r20 = [0,-1, 0, 0, 0,-1, 0, 0, 0, 0,-1, 0];
+$r21 = [0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0];
+$r22 = [-1,0,-1, 0,-1, 0, 0, 0, 0,-1, 0, 0];
+$r23 = [0,-1, 0, 0, 0,-1, 0,-1, 0, 0,-1, 0];
+$r24 = [0, 0, 0,-1, 0, 0,-1, 0,-1, 0, 0,-1];
+
+$c = new Cone(INPUT_RAYS=>[$r1,$r2,$r3,$r4,$r5,$r6,$r7,$r8,$r9,$r10,$r11,$r12,$r13,$r14,$r15,$r16,$r17,$r18,$r19,$r20,$r21,$r22,$r23,$r24]);
+
+$toric = $c->TORIC_IDEAL; #this should be the ideal with vanishing set the _normal_ toric variety associated to c.
+
+print join ("\n", @{$toric->GENERATORS});
+
+$c1 = new Cone(HILBERT_BASIS_GENERATORS=>[[$r1,$r2,$r3,$r4,$r5,$r6,$r7,$r8,$r9,$r10,$r11,$r12,$r13,$r14,$r15,$r16,$r17,$r18,$r19,$r20,$r21,$r22,$r23,$r24],[[]]]);
+
+$toric1 = $c1->TORIC_IDEAL; #this should be the ideal with vanishing set our defined, possibly not normal, toric variety.
+
+print join ("\n", @{$toric1->GENERATORS}); #the generators are different from c, but they also seem to be different from our original generators calculated with sage.
+
