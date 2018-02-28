@@ -1,6 +1,6 @@
 #See the following resource: http://page.math.tu-berlin.de/~joswig/teaching/VL+SE-Convex+geometry+related+to+Hamiltonian+group+actions-WS17/jupyter.pdf or http://page.math.tu-berlin.de/~joswig/teaching/VL+SE-Convex+geometry+related+to+Hamiltonian+group+actions-WS17/jupyter.ipynb
 
-#In my live polymake session, I observed the results in the comments below. However, at some point polymake stopped working.
+#In my live polymake session, I observed the results in the comments below.
 
 #It is very time-consuming to find all the dependencies necessary to install Polymake in Ubuntu. I listed them in required.txt.
 
