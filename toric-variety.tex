@@ -2,8 +2,10 @@
 \section{The Toric Variety}
 
 We consider the space of weights $\mathbb C^{12} = \{(\beta_{i},\alpha_{jk})\mid 1\leq i,j,k\leq 3\}$ and the space of transition rates $\mathbb C^{24} = \{(F_{xy}) \mid x,y \text{ binary states differing at one bit}\}$. We have a map
-$f\colon \mathbb C^{12}\to \mathbb C^{24}$ \annotation{defined how?}. We define the toric variety $X$ as the Zariski closure of the image of $f$.
+$f\colon \mathbb C^{12}\to \mathbb C^{24}$ defined by $f(\alpha,\beta) = (F_{xy}(\alpha,\beta))_{xy}$. We define the toric variety $X$ as the Zariski closure of the image of $f$.
 
-\begin{calculation}
-The variety $X$ has dimension $12$ and degree $216$. This can be directly calculated after finding the ideal of $X$ via elimination of variables. \annotation{better: use PolyMake to take advantage of the toric structure}
-\end{calculation}
+Using Polymake, we can compute the Hilbert series of (the closure in $\mathbb P^{24}$ of) $X$. We obtain The Hilbert series
+	\[\frac{P(x)}{(1-x)^{12}}\]
+with \[P(x)=x^6 + 12x^5 + 51x^4 + 88x^3 + 51x^2 + 12x + 1.\]
+
+The dimension of $X$ is thus $12$, i.\ e.\ the degree of the denominator, and its degree is $P(1)=216$.
