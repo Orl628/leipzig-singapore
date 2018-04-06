@@ -1,14 +1,15 @@
 %!TEX root = ./master.tex
 
-\section{McCulloch-Pitts Process}
+%\section{McCulloch-Pitts Process}
 
 
-\subsection{Model}
-Given a directed graph $G=(V,E)$ with vertex weights $\beta_i > 0$ and edge weights $\alpha_{ij} > 0$, a \emph{McCulloch-Pitts process, MPP} is an activity-based process with binary states $x \in \{0,1\}^{|V|}$ and transitions $xy$ where state $y$ is one-bit away from state $x$. If $y$ and $x$ differs in the $i$-th bit, we define the transition rate
+\subsection*{The statistical model}
+%\annotation{Will remove subsections and make sections instead}
 
+Given a directed graph $G=(V,E)$ without multiple edges, with vertex weights $\beta_i > 0$ and edge weights $\alpha_{ij} > 0$, a \emph{McCulloch-Pitts process (MPP)} is an activity-based process with binary states $x \in \{0,1\}^{|V|}$ and transitions $xy$ where state $y$ is one-bit away from state $x$. If $y$ and $x$ differs in the $i$-th bit, we define the transition rate
 \begin{align*}
 F_{xy} = \left[ \beta_i^{\sigma_i} \alpha_i^{x \sigma_i} \right]^{1/\tau}
-%\text{\annotation{ shouldn't it be $\alpha_{ij}$?}}
+\text{\annotation{ what is $\sigma_i$?}}
 \end{align*}
 where $\alpha_i^{x} = \alpha_{1i}^{x_1}\alpha_{2i}^{x_2}\ldots\alpha_{di}^{x_{d}}$ where $|V|=d$.
 
@@ -67,7 +68,7 @@ F=\kbordermatrix{
 
 where $\ast$ denotes the negative of the sum of its corresponding row, and $\alpha_i^{111} = \alpha_{1i}\alpha_{2i}\alpha_{3i}$. 
 
-\subsection{Simulation}
+\subsection*{Simulation}
 
 The simulation of the McCulloch-Pitts process starts by drawing an inital state $x^{(0)}$  from a distribution $p^{(0)}$. Then for any state $x$, it holds for some time 
 \begin{align*}
@@ -79,11 +80,11 @@ F_{xy}/\lambda_x
 \end{align*}
 Thus the temporal data obtained from the simulation are binary tuples of length $|V|$ and an associated holding time for each pair of consecutive state.
 
-\subsection{Group Action}
+\annotation{Could you write something about the connection to machine learning/recurrent neural networks? Thanks!}
 
+\subsection*{Toric Variety}
+\annotation{I would remove this section if this is ok. I wouldn't redefine what it means to be a toric variety etc, as we want to keep this short.}
 
-
-\section{Toric Variety}
 With the statistical model defined proper, we would like to show that given directed graph $G = (V,E)$  with $|V| = d$, with non-negative vertex and edge weights $\beta_i, \alpha_{ij}$ respectively, we have a map $F: \mathbb{C}^{d(d+1)} \to \mathbb{C}^{d\cdot 2^d}$ defined by $(\beta_i,\alpha_{ij})\mapsto (F_{xy})$, from the space of non-negative parameters to the space of stochastic space matrices and the closure(note: do we really need to take its closure or it is guaranteed to be close?) of the image is a toric variety.
 
 The Zariski closure of $X \subset \mathbb{C}$, is
@@ -98,13 +99,23 @@ A toric variety is an irreducible variety $V$ such that
 \item $(\mathbb{C}^\ast)^n$ is a Zariski open subset of $V$
 \item the action of $(\mathbb{C}^\ast)^n$ on itself extends to an action of $(\mathbb{C}^\ast)^n$ on $V$.
 \end{itemize}
-\end{defn} 
-
-
-
-
+\end{defn}
 
 Next we would like know the degree and dimension of our toric variety. By first principles, we can obtain them by.... 
 
 
 {\color{blue}I would like to give some heuristics here, like the degree is the number of interections when we stab the toric variety with a line, plane or in general with a hyperplane. What good does knowing the dimension and degree helps us with and how the method of finding the dimension we used on Wednesday is equivalent to finding the dimension and degree by the method we discuss above.}
+
+\subsection*{The Toric Variety}
+
+We consider the space of weights $W \coloneqq \mathbb C^{d+|E|} = \{(\beta_{i},\alpha_{jk})\mid i\in V,(j,k)\in E\}$ and the space of transition rates $T \coloneqq \mathbb C^{2^{d}d} = \{(F_{xy}) \mid x,y \text{ binary states differing at one bit}\}$. We have a map
+$f\colon W\to T$ defined by $f(\alpha,\beta) = (F_{xy}(\alpha,\beta))_{xy}$. We define the toric variety $X$ as the Zariski closure of the image of $f$.
+
+In the above example, we get the map $f\colon \mathbb C^{12}\to \mathbb C^{24}$ and the induced toric variety $X$. Using Polymake, we can compute the Hilbert series of (the closure in $\mathbb P^{24}$ of) $X$. We obtain The Hilbert series
+	\[\frac{P(x)}{(1-x)^{12}}\]
+with \[P(x)=x^6 + 12x^5 + 51x^4 + 88x^3 + 51x^2 + 12x + 1.\]
+
+The dimension of $X$ is thus $12$, i.\ e.\ the degree of the denominator, and the degree of X is $P(1)=216$.
+
+\subsection*{A group action}
+Let $\pi$ be a graph isomorphism of $G$, seen as a map $V\to V$. The map $\pi$ acts on the space of weights by sending an element $(\beta_i,\alpha_{j,k})$ to $(\beta_{\pi i},\alpha_{\pi{j},\pi{k}})$, and similarly it acts on the space of transition rates. Since $f$ is a Laurent map, for all weights $(\alpha,\beta)$ we have $\pi f (\alpha,\beta) = f \pi (\alpha, \beta)$. Hence we obtain a group action of $\operatorname{Aut}(G)$ on the variety $X$.
