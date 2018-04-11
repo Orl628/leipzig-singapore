@@ -4,9 +4,10 @@
 
 \subsection*{Motivation}
 
-\annotation{I'm placing the connections to machine and RNNs here, seems weird to have it in simulation section.}
-
-The artificial neural networks that we have in deep learning today are inspired by biological neurons in mammalian brains. Biological neurons are electrical excitable, where a neuron spikes and discharges electrical signals through their synapses, which are the complex membrance junctions that transmit signals to other neurons. An example given in Figure \ref{fig:feedforwardnn} is the feedforward neural network, where in the case of computer vision, we feed the network with an image to do classification of the image into one of the many classes.
+The artificial neural networks that we have in deep learning today are inspired by biological neurons in mammalian brains. Biological neurons are electrically excitable, where a neuron spikes and discharges electrical signals through its synapses
+.
+%, which are the complex membrance junctions that transmit signals to other neurons.
+An example given in Figure \ref{fig:feedforwardnn} is the feedforward neural network, where in the case of computer vision, we feed the network with an image to do classification of the image into one of the many classes.
 
 
 \begin{figure}[h]
@@ -92,7 +93,7 @@ The artificial neural networks that we have in deep learning today are inspired 
 \label{fig:feedforwardnn}
 \end{figure}
 
-However, in a feedforward network, the connection of the different layers of the neuron do not form a cycle. This is not true for biological neurons as there is no one direction of the connection of the neurons. Thus we look to recurrent neural networks (RNN), where the connections between the neurons to form a directed cycle is allowed. One of the popular RNNs is long short term memory (LSTM), which are able to connect previous information to the present task. The neurons in LSTM communicate with real values, which is different from how biological neurons communicate in mammalian brains. Therefore, we only allow the neurons in our network to be binary-valued, $\{0,1\}$ where a transition $0 \to 1$ represents a spiking activity and a transition $1 \to 0$ represents the recovery of a neuron to an armed state.
+However, in a feedforward network, the connections between the different layers of the neurons never form a cycle. This is not true for biological neural networks as there is no preferred direction of information flow across the network. Thus we look to recurrent neural networks (RNN), where the connections between the neurons are allowed to form directed cycles. One of the popular RNNs variants is long short term memory (LSTM), which is able to connect previous information to the present task. The neurons in LSTM communicate with real values, which is different from how biological neurons communicate in mammalian brains. Therefore, we only allow the neurons in our network to be binary-valued, $\{0,1\}$ where a transition $0 \to 1$ represents a spiking activity and a transition $1 \to 0$ represents the recovery of a neuron to an armed state.
 
 
 \subsection*{The statistical model}
