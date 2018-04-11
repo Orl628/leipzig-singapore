@@ -170,7 +170,7 @@ where $\lambda_x = \sum_{y \neq x}F_{xy}$ and it transits to state $y$ which is 
 \begin{align*}
 F_{xy}/\lambda_x
 \end{align*}
-Thus the temporal data obtained from the simulation are binary tuples of length $|V|$ and an associated holding time for each pair of consecutive state.
+Thus the temporal data obtained from the simulation are binary tuples of length $|V|$ and an associated holding time for each pair of consecutive state. In Figure \ref{fig:simulateddata} we give an example of the data that is obtained from simulating the MPP.
 
 \begin{figure}[h]
 \centering
@@ -184,8 +184,11 @@ Thus the temporal data obtained from the simulation are binary tuples of length 
 0006: state [1 1 1 1 1 1 0 0] | neuron 006 | holding time 0.38924525541203236
 0007: state [1 1 1 1 1 1 1 0] | neuron 006 | holding time 0.011087533081789665
 \end{python}
+\label{fig:simulateddata}
 \caption{Temporal data generated from simulation for a MPP with eight neurons}
 \end{figure}
+
+
 
 
 %\annotation{Could you write something about the connection to machine learning/recurrent neural networks? Thanks! }
