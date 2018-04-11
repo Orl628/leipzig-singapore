@@ -2,6 +2,98 @@
 
 %\section{McCulloch-Pitts Process}
 
+\subsection*{Motivation}
+
+\annotation{I'm placing the connections to machine and RNNs here, seems weird to have it in simulation section.}
+
+The artificial neural networks that we have in deep learning today are inspired by biological neurons in mammalian brains. Biological neurons are electrical excitable, where a neuron spikes and discharges electrical signals through their synapses, which are the complex membrance junctions that transmit signals to other neurons. An example given in Figure \ref{fig:feedforwardnn} is the feedforward neural network, where in the case of computer vision, we feed the network with an image to do classification of the image into one of the many classes.
+
+
+\begin{figure}[h]
+\centering
+
+\def\layersep{1.8cm}
+
+\begin{tikzpicture}[scale = 1,draw=black!50, node distance=\layersep]
+%    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=10pt,inner sep=0pt]
+    \tikzstyle{input neuron}=[neuron, fill=blue!70!red!70];
+        \tikzstyle{hidden neuron 0}=[neuron, fill=blue!50!red!50];
+    \tikzstyle{hidden neuron 1}=[neuron, fill=red!80];
+    \tikzstyle{hidden neuron 2}=[neuron, fill=red!50];
+        \tikzstyle{output neuron}=[neuron, fill=orange!70];
+
+    \tikzstyle{annot} = [text width=4em, text centered]
+
+    % Draw the input layer nodes
+    \foreach \name / \y in {1,...,6}
+    	\node[input neuron] (I-\name) at (0,-\y) {};
+		\node[input neuron] (I-4) at (0,-4) {};
+
+ \foreach \name / \y in {1,...,6}
+    	            \node[hidden neuron 0] (B-\name) at (\layersep,-\y cm) {};
+
+
+    % Draw the hidden layer nodes
+    \foreach \name / \y in {1,...,6}
+            \node[hidden neuron 1] (H-\name) at (2*\layersep,-\y cm) {};
+    % Draw the output layer node
+%    \node[output neuron,pin={[pin edge={->}]right:$h_{W,b}(x) = f(z_{1}^{(3)}) = a_{1}^{(3)}$}, right of=H-3] (O) {};
+ \foreach \name / \y in {1,...,6}
+            \node[hidden neuron 2] (P-\name) at (3*\layersep,-\y cm) {};
+
+ \foreach \name / \y in {1,...,3}
+ \path[yshift=-1.5cm]
+      node[output neuron] (O-\name) at (4*\layersep,-\y cm) {};
+
+    % Connect every node in the input layer with every node in the
+    % hidden layer.
+    \foreach \source in {1,...,6}
+        \foreach \dest in {1,...,6}
+            \path[color = blue!70!red!70] (I-\source) edge (B-\dest);
+
+  \foreach \source in {1,...,6}
+        \foreach \dest in {1,...,6}
+            \path[color = blue!50!red!50] (B-\source) edge (H-\dest);
+
+\foreach \source in {1,...,6}
+        \foreach \dest in {1,...,6}
+            \path[color = red!80] (H-\source) edge (P-\dest);
+
+\foreach \source in {1,...,6}
+        \foreach \dest in {1,...,3}
+            \path[color = red!50] (P-\source) edge (O-\dest);
+
+%    \node[annot,below=0.25cm of {H-6}, node distance=1cm] (hl2) {\small {\color{red!80}L3}};
+%    \node[annot,left of ={hl2}](hl1) {\small {\color{blue!50!red!50}L2}};
+%        \node[annot,left of=hl1] {\small {\color{blue!70!red!70}L1}};
+%            \node[annot,right of=hl2](hl3) {\small {\color{red!50}L4}};
+%            \node[annot,right of=hl3] {\small {\color{orange!70}L5}};
+\node[left=1.25cm of {I-3},yshift=-.5cm] (dog) {};
+ \foreach \dest in {1,...,6}
+            \draw[color = black!30,->,>=stealth, decoration, decoration={snake}] (dog) -- (I-\dest);
+
+            \filldraw [black!50,scale=0.1,transform node coordinates,shift={(-25,-45)}]
+  plot  coordinates \dogcoordinates  -- cycle;
+  
+%  \node[output neuron] at (O-2) {{\color{white}1}};
+%    \node[hidden neuron 0] at (B-2) {{\color{white}1}};
+%        \node[hidden neuron 1] at (H-4) {{\color{white}1}};
+%            \node[hidden neuron 2] at (P-6) {{\color{white}1}};
+%             \node[input neuron] at (I-4) {{\color{white}1}};
+             \path[color = blue!70!red!70, very thick] (I-4) edge (B-2);
+           \path[color = blue!50!red!50, very thick] (B-2) edge (H-4);
+            \path[color = red!80, very thick] (H-4) edge (P-6);
+      \path[color = red!50, very thick] (P-6) edge (O-2);
+      \node[right=0.25cm of {O-2}](w) {{\color{orange!70}``Dog''}};
+            \draw[->,>=stealth, color=orange!70,very thick] (O-2) -- (w);
+\end{tikzpicture}
+\caption{Feedforward Neural Network}
+\label{fig:feedforwardnn}
+\end{figure}
+
+However, in a feedforward network, the connection of the different layers of the neuron do not form a cycle. This is not true for biological neurons as there is no one direction of the connection of the neurons. Thus we look to recurrent neural networks (RNN), where the connections between the neurons to form a directed cycle is allowed. One of the popular RNNs is long short term memory (LSTM), which are able to connect previous information to the present task. The neurons in LSTM communicate with real values, which is different from how biological neurons communicate in mammalian brains. Therefore, we only allow the neurons in our network to be binary-valued, $\{0,1\}$ where a transition $0 \to 1$ represents a spiking activity and a transition $1 \to 0$ represents the recovery of a neuron to an armed state.
+
 
 \subsection*{The statistical model}
 %\annotation{Will remove subsections and make sections instead}
@@ -9,9 +101,9 @@
 Given a directed graph $G=(V,E)$ without multiple edges, with vertex weights $\beta_i > 0$ and edge weights $\alpha_{ij} > 0$, a \emph{McCulloch-Pitts process (MPP)} is an activity-based process with binary states $x \in \{0,1\}^{|V|}$ and transitions $xy$ where state $y$ is one-bit away from state $x$. If $y$ and $x$ differs in the $i$-th bit, we define the transition rate
 \begin{align*}
 F_{xy} = \left[ \beta_i^{\sigma_i} \alpha_i^{x \sigma_i} \right]^{1/\tau}
-\text{\annotation{ what is $\sigma_i$?}}
+%\text{\annotation{ what is $\sigma_i$?}}
 \end{align*}
-where $\alpha_i^{x} = \alpha_{1i}^{x_1}\alpha_{2i}^{x_2}\ldots\alpha_{di}^{x_{d}}$ where $|V|=d$.
+where $\alpha_i^{x} = \alpha_{1i}^{x_1}\alpha_{2i}^{x_2}\ldots\alpha_{di}^{x_{d}}$ with $|V|=d$ and $\sigma_i = 1 - 2x_i \in \{-1,+1\}$ denotes the change in the state of the $i$-th bit.
 
 
 \begin{figure}[h]
@@ -80,31 +172,47 @@ F_{xy}/\lambda_x
 \end{align*}
 Thus the temporal data obtained from the simulation are binary tuples of length $|V|$ and an associated holding time for each pair of consecutive state.
 
-\annotation{Could you write something about the connection to machine learning/recurrent neural networks? Thanks!}
-
-\subsection*{Toric Variety}
-\annotation{I would remove this section if this is ok. I wouldn't redefine what it means to be a toric variety etc, as we want to keep this short.}
-
-With the statistical model defined proper, we would like to show that given directed graph $G = (V,E)$  with $|V| = d$, with non-negative vertex and edge weights $\beta_i, \alpha_{ij}$ respectively, we have a map $F: \mathbb{C}^{d(d+1)} \to \mathbb{C}^{d\cdot 2^d}$ defined by $(\beta_i,\alpha_{ij})\mapsto (F_{xy})$, from the space of non-negative parameters to the space of stochastic space matrices and the closure(note: do we really need to take its closure or it is guaranteed to be close?) of the image is a toric variety.
-
-The Zariski closure of $X \subset \mathbb{C}$, is
-\begin{align*}
-\overline{X}:=\{p \in \mathbb{C}^n \mid f(p) = 0 \text{ whenever } f(X) = 0\}
-\end{align*}
-
-
-\begin{defn}
-A toric variety is an irreducible variety $V$ such that
-\begin{itemize}
-\item $(\mathbb{C}^\ast)^n$ is a Zariski open subset of $V$
-\item the action of $(\mathbb{C}^\ast)^n$ on itself extends to an action of $(\mathbb{C}^\ast)^n$ on $V$.
-\end{itemize}
-\end{defn}
-
-Next we would like know the degree and dimension of our toric variety. By first principles, we can obtain them by.... 
+\begin{figure}[h]
+\centering
+\begin{python}
+0000: state [1 1 0 1 1 1 1 0] | neuron 002 | holding time 0.0032901008027207005
+0001: state [1 1 1 1 1 1 1 0] | neuron 003 | holding time 0.16460101982700073
+0002: state [1 1 1 0 1 1 1 0] | neuron 007 | holding time 0.019009826806025597
+0003: state [1 1 1 0 1 1 1 1] | neuron 003 | holding time 0.13344528911418524
+0004: state [1 1 1 1 1 1 1 1] | neuron 006 | holding time 0.03776971154447096
+0005: state [1 1 1 1 1 1 0 1] | neuron 007 | holding time 0.003934267162875663
+0006: state [1 1 1 1 1 1 0 0] | neuron 006 | holding time 0.38924525541203236
+0007: state [1 1 1 1 1 1 1 0] | neuron 006 | holding time 0.011087533081789665
+\end{python}
+\caption{Temporal data generated from simulation for a MPP with eight neurons}
+\end{figure}
 
 
-{\color{blue}I would like to give some heuristics here, like the degree is the number of interections when we stab the toric variety with a line, plane or in general with a hyperplane. What good does knowing the dimension and degree helps us with and how the method of finding the dimension we used on Wednesday is equivalent to finding the dimension and degree by the method we discuss above.}
+%\annotation{Could you write something about the connection to machine learning/recurrent neural networks? Thanks! }
+
+%\subsection*{Toric Variety}
+%\annotation{I would remove this section if this is ok. I wouldn't redefine what it means to be a toric variety etc, as we want to keep this short.}
+%
+%With the statistical model defined proper, we would like to show that given directed graph $G = (V,E)$  with $|V| = d$, with non-negative vertex and edge weights $\beta_i, \alpha_{ij}$ respectively, we have a map $F: \mathbb{C}^{d(d+1)} \to \mathbb{C}^{d\cdot 2^d}$ defined by $(\beta_i,\alpha_{ij})\mapsto (F_{xy})$, from the space of non-negative parameters to the space of stochastic space matrices and the closure(note: do we really need to take its closure or it is guaranteed to be close?) of the image is a toric variety.
+%
+%The Zariski closure of $X \subset \mathbb{C}$, is
+%\begin{align*}
+%\overline{X}:=\{p \in \mathbb{C}^n \mid f(p) = 0 \text{ whenever } f(X) = 0\}
+%\end{align*}
+%
+%
+%\begin{defn}
+%A toric variety is an irreducible variety $V$ such that
+%\begin{itemize}
+%\item $(\mathbb{C}^\ast)^n$ is a Zariski open subset of $V$
+%\item the action of $(\mathbb{C}^\ast)^n$ on itself extends to an action of $(\mathbb{C}^\ast)^n$ on $V$.
+%\end{itemize}
+%\end{defn}
+%
+%Next we would like know the degree and dimension of our toric variety. By first principles, we can obtain them by.... 
+%
+%
+%{\color{blue}I would like to give some heuristics here, like the degree is the number of interections when we stab the toric variety with a line, plane or in general with a hyperplane. What good does knowing the dimension and degree helps us with and how the method of finding the dimension we used on Wednesday is equivalent to finding the dimension and degree by the method we discuss above.}
 
 \subsection*{The Toric Variety}
 

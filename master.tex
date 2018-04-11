@@ -9,6 +9,7 @@
 %for annotations
 \newcommand\annotation[1]{\textcolor{red}{#1}}
 \usepackage{kbordermatrix}
+\usepackage{listings}
 
 \newtheorem{theorem}{Theorem}
 
@@ -32,6 +33,59 @@
     \draw[#4,thick]($(h1)!#1!90:(h2)$)-- node [left=-.75mm] {#5} ($(h2)!#1!-90:(h1)$); 
     \draw[#6,thick]($(h1)!#1!-90:(h2)$)-- node [right=-.75mm] {#7} ($(h2)!#1!90:(h1)$);
     }
+    
+\def\dogcoordinates{ ( 3.666,15.100) 
+( 2.833,14.900) ( 2.233,14.366) ( 2.133,13.966)  
+( 1.733,13.966) ( 1.433,13.366) ( 1.433,13.000)  
+( 1.566,12.633) ( 2.066,12.333) ( 2.466,12.200)  
+( 2.766,12.200) ( 3.000,12.333) ( 3.333,12.300)
+( 3.533,12.033) ( 3.666,11.400) ( 4.033,10.566) 
+( 4.000, 9.133) ( 4.833, 7.300) ( 5.300, 4.400)  
+( 5.333, 3.400) ( 5.233, 2.700) ( 4.700, 2.466)
+( 4.633, 2.100) ( 5.133, 1.933) ( 5.600, 1.933) 
+( 5.833, 2.033) ( 6.033, 2.333) ( 6.166, 3.166)
+( 6.300, 3.300) ( 6.366, 5.366) ( 6.566, 6.966)  
+( 8.233, 7.133) (11.033, 8.033) (11.600, 7.733) 
+(12.266, 6.600) (13.300, 5.500) (14.066, 4.933)  
+(14.600, 4.300) (14.733, 3.966) (14.700, 2.866) 
+(14.600, 2.666) (14.233, 2.466) (14.166, 2.066)  
+(14.333, 1.933) (14.666, 1.900) (15.133, 1.966)  
+(15.400, 2.200) (15.733, 4.833) (15.333, 5.400) 
+(14.600, 6.100) (14.266, 7.033) (14.000, 9.800)  
+(13.833,10.433) (13.666,10.666) (14.033,11.366)  
+(14.033,11.633) (13.666,11.666) (13.200,11.200)  
+(12.100,11.433) (10.400,11.400) ( 8.366,11.533)  
+( 7.966,11.833) ( 7.233,11.966) ( 6.966,12.200) 
+( 6.666,12.233) ( 5.700,13.600) ( 4.966,14.266) 
+( 4.933,14.533) ( 4.733,14.733) ( 4.366,14.900)  
+( 4.300,15.033) ( 3.700,15.100) }
+
+\makeatletter
+\newif\iftikztransformnodecoordinates
+\tikzset{transform node coordinates/.is if=tikztransformnodecoordinates}
+
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}  % for normal
+
+\newcommand\pythonstyle{\lstset{
+language=Python,
+basicstyle=\ttm,
+otherkeywords={self},             % Add keywords here
+keywordstyle=\ttb\color{deepblue},
+emph={MyClass,__init__},          % Custom highlighting
+emphstyle=\ttb\color{deepred},    % Custom highlighting style
+stringstyle=\color{deepgreen},
+frame=tb,                         % Any extra options here
+showstringspaces=false            % 
+}}    
+    
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}    
 
 \input{commands}
 
